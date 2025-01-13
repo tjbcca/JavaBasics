@@ -1,8 +1,17 @@
 import java.util.Scanner;
 
 public class CoffeeShop {
-    public static void main(String[] args) {
+    private static int totalCoffeeShops = 0; // Static field to keep track of total coffee shops
+
+    public CoffeeShop() {
+        totalCoffeeShops++; // Increment the static field in the constructor
+    }
+
+    public static void setupCoffeeShop() {
         Scanner scanner = new Scanner(System.in);
+
+        // Create an instance of CoffeeShop to increment the totalCoffeeShops counter
+        CoffeeShop shop = new CoffeeShop();
 
         // Get name and shop name
         System.out.print("What is your name? ");
@@ -16,12 +25,15 @@ public class CoffeeShop {
         // Get initial price of a cup of coffee
         System.out.print("\nWhat do you want to charge per cup of coffee? ");
         double price = scanner.nextDouble();
+        scanner.nextLine(); // Consume the newline character left by nextDouble()
+
         // Get hours via loop and branch
-        String givehours = scanner.nextLine();
+        String givehours = "";
         while (!givehours.equalsIgnoreCase("y") && !givehours.equalsIgnoreCase("n")) {
-            System.out.print("Will your coffee shop be open 24 hours? (y/n)");
+            System.out.print("Will your coffee shop be open 24 hours? (y/n) ");
             givehours = scanner.nextLine();
         }
+
         boolean hours = false; // Declare the boolean variable outside the if statement
         if (givehours.equalsIgnoreCase("y")) {
             hours = true;
@@ -41,6 +53,22 @@ public class CoffeeShop {
         }
         System.out.printf("Your first cup of coffee will sell for $%.2f.\n", price);
 
-        scanner.close();
+        // Display the total number of coffee shops
+
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        setupCoffeeShop(); // Call the static method to set up the coffee shop
+        String moreshops = "";
+        while (!moreshops.equalsIgnoreCase("y") && !moreshops.equalsIgnoreCase("n")) {
+            System.out.print("Would you like to make another coffee shop? (y/n) ");
+            moreshops = scanner.nextLine();
+            if (moreshops.equalsIgnoreCase("y")) {
+                setupCoffeeShop();
+                moreshops = "";
+            }
+        System.out.println("Total coffee shops created: " + CoffeeShop.totalCoffeeShops);
+        }
     }
 }
